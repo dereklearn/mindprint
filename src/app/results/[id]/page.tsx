@@ -140,9 +140,20 @@ export default function ResultsPage() {
         <div className="space-y-4 mb-8">
           {profile.traits.map((t) => (
             <div key={t.key} className="bg-slate-800/60 rounded-2xl p-6 border border-slate-700/50">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: t.color }} />
-                <h3 className="text-white font-semibold">{t.name} — {t.score}%</h3>
+              {/* Archetype header */}
+              <div className="flex items-center gap-4 mb-5">
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+                  style={{ backgroundColor: `${t.color}22`, border: `1px solid ${t.color}55` }}
+                >
+                  {t.archetypeIcon}
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest mb-0.5" style={{ color: t.color }}>
+                    {t.name} · {t.score}%
+                  </p>
+                  <h3 className="text-white font-bold text-lg leading-tight">{t.archetype}</h3>
+                </div>
               </div>
               <div className="space-y-3">
                 <div>
