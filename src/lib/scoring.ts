@@ -12,9 +12,16 @@ export interface TraitResult {
   vulnerability: string
 }
 
+export interface ConsolidatedType {
+  name: string
+  icon: string
+  description: string
+}
+
 export interface ProfileResult {
   traits: TraitResult[]
   summary: string
+  consolidatedType: ConsolidatedType
 }
 
 const traitMeta: Record<TraitKey, { name: string; color: string }> = {
@@ -59,6 +66,39 @@ function getInsight(trait: TraitKey, score: number) {
   return insights[trait][index]
 }
 
+const consolidatedTypes: Record<string, ConsolidatedType> = {
+  'O+C': { name: 'The Methodical Innovator', icon: '🧪', description: 'You combine a hunger for new ideas with the discipline to actually bring them to life. Where others dream, you build.' },
+  'O+E': { name: 'The Creative Visionary', icon: '🎨', description: 'You light up rooms with fresh thinking and infectious energy. Your imagination inspires others to see what is possible.' },
+  'O+A': { name: 'The Empathetic Explorer', icon: '🌍', description: 'You explore ideas with an open heart — curious about the world and genuinely invested in the people within it.' },
+  'O+N': { name: 'The Introspective Dreamer', icon: '🌌', description: 'Your rich inner world fuels deep creativity. You feel ideas as much as you think them, giving your work rare emotional depth.' },
+  'C+O': { name: 'The Strategic Inventor', icon: '⚙️', description: 'You bring structure to bold ideas. Where others see chaos, you see a system waiting to be built — and you build it.' },
+  'C+E': { name: 'The Driven Leader', icon: '🎯', description: 'You set the direction and keep the team moving. Organised, energetic and focused, you make things happen.' },
+  'C+A': { name: 'The Devoted Builder', icon: '🏛️', description: 'You build lasting things — relationships, systems, communities — with care and quiet determination.' },
+  'C+N': { name: 'The Vigilant Planner', icon: '📊', description: 'You plan ahead because you feel the weight of what could go wrong. That awareness, channelled well, makes you exceptionally prepared.' },
+  'E+O': { name: 'The Inspiring Adventurer', icon: '✨', description: 'You chase new experiences and bring others along for the ride. Spontaneous, expressive and endlessly curious.' },
+  'E+C': { name: 'The Organised Connector', icon: '🌐', description: 'You bring people together with intention. Social, structured and reliable — you are the person who actually follows through.' },
+  'E+A': { name: 'The Magnetic Nurturer', icon: '🌟', description: 'You draw people in and make them feel genuinely seen. Warm, expressive and deeply caring about those around you.' },
+  'E+N': { name: 'The Passionate Advocate', icon: '🔥', description: 'You feel things intensely and speak up for what matters. Your emotional depth gives your voice real power.' },
+  'A+O': { name: 'The Compassionate Visionary', icon: '🌸', description: 'You imagine a better world and care deeply about making it real for the people around you.' },
+  'A+C': { name: 'The Reliable Guardian', icon: '🛡️', description: 'People know they can count on you — to show up, to care and to do what you said you would do.' },
+  'A+E': { name: 'The Social Harmoniser', icon: '🤝', description: 'You are the glue in every group — warm, sociable and gifted at keeping people connected and at ease.' },
+  'A+N': { name: 'The Sensitive Mediator', icon: '💫', description: 'You feel the emotional temperature of every room and work gently to keep things balanced and kind.' },
+  'N+O': { name: 'The Reflective Artist', icon: '🎭', description: 'Your emotional sensitivity and imagination combine into something rare — a deep, authentic creative voice.' },
+  'N+C': { name: 'The Conscientious Worrier', icon: '📋', description: 'You hold yourself to high standards and feel the gap when things fall short. That tension drives remarkable attention to detail.' },
+  'N+E': { name: 'The Intense Performer', icon: '🎤', description: 'You live boldly and feel deeply. Life is vivid for you — and that intensity is magnetic to the people around you.' },
+  'N+A': { name: 'The Devoted Empath', icon: '💝', description: 'You absorb the feelings of those around you and respond with genuine compassion. Few people make others feel as understood as you do.' },
+}
+
+function getConsolidatedType(traits: TraitResult[]): ConsolidatedType {
+  const sorted = [...traits].sort((a, b) => b.score - a.score)
+  const key = `${sorted[0].key}+${sorted[1].key}`
+  return consolidatedTypes[key] ?? {
+    name: 'The Unique Mind',
+    icon: '🧠',
+    description: 'Your personality is a rare and complex blend that defies easy categorisation. That is your greatest strength.',
+  }
+}
+
 export function calculateProfile(
   answers: number[],
   questions: { trait: string; reverse: boolean }[]
@@ -86,6 +126,7 @@ export function calculateProfile(
 
   const topTrait = traits.reduce((a, b) => (a.score > b.score ? a : b))
   const summary = `Your strongest trait is ${topTrait.name} at ${topTrait.score}%. You have a unique blend of qualities that define how you see the world and connect with others.`
+  const consolidatedType = getConsolidatedType(traits)
 
-  return { traits, summary }
+  return { traits, summary, consolidatedType }
 }

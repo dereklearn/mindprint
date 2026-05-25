@@ -104,8 +104,17 @@ export default function ResultsPage() {
     <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 px-4 py-12">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-white mb-2">Your <span className="text-purple-400">MindPrint</span></h1>
-          <p className="text-slate-400">{profile.summary}</p>
+          <h1 className="text-4xl font-bold text-white mb-6">Your <span className="text-purple-400">MindPrint</span></h1>
+
+          {/* Consolidated type card */}
+          <div className="bg-gradient-to-br from-purple-900/50 to-slate-800/50 rounded-2xl p-6 border border-purple-700/40 mb-6">
+            <div className="text-5xl mb-3">{profile.consolidatedType.icon}</div>
+            <p className="text-purple-300 text-xs font-semibold uppercase tracking-widest mb-1">Your Personality Type</p>
+            <h2 className="text-white text-2xl font-bold mb-3">{profile.consolidatedType.name}</h2>
+            <p className="text-slate-300 text-sm leading-relaxed">{profile.consolidatedType.description}</p>
+          </div>
+
+          <p className="text-slate-400 text-sm">{profile.summary}</p>
         </div>
 
         {/* Shareable card */}
