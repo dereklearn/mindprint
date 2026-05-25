@@ -7,6 +7,12 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://neuralforge-labs.com'),
+  verification: {
+    google: 'ca-pub-1272468663293294',
+  },
+  other: {
+    'google-adsense-account': 'ca-pub-1272468663293294',
+  },
   title: 'MindPrint — Discover Your Personality',
   description: 'Take the MindPrint Big Five personality quiz and discover your unique traits.',
   openGraph: {
