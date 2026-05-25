@@ -1,18 +1,11 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Script from 'next/script'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://neuralforge-labs.com'),
-  verification: {
-    google: 'ca-pub-1272468663293294',
-  },
-  other: {
-    'google-adsense-account': 'ca-pub-1272468663293294',
-  },
   title: 'MindPrint — Discover Your Personality',
   description: 'Take the MindPrint Big Five personality quiz and discover your unique traits.',
   openGraph: {
@@ -32,15 +25,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {children}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1272468663293294"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }
