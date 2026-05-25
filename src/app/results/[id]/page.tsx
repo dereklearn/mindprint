@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       title: 'My MindPrint Personality Results',
       description: 'See my Big Five personality profile — discover yours free at MindPrint.',
       images: [{
-        url: `/MindPrint/results/${id}/opengraph-image`,
+        url: `https://neuralforge-labs.com/MindPrint/api/og/results/${id}`,
         width: 1200,
         height: 630,
         alt: 'My MindPrint Personality Results',

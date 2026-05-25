@@ -2,11 +2,9 @@ import { ImageResponse } from 'next/og'
 import { createClient } from '@supabase/supabase-js'
 import { calculateProfile } from '@/lib/scoring'
 
-export const alt = 'My MindPrint Personality Results'
-export const size = { width: 1200, height: 630 }
-export const contentType = 'image/png'
+export const runtime = 'edge'
 
-export default async function OGImage({ params }: { params: Promise<{ id: string }> }) {
+export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
 
   const supabase = createClient(
@@ -41,7 +39,6 @@ export default async function OGImage({ params }: { params: Promise<{ id: string
           fontFamily: 'sans-serif',
         }}
       >
-        {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: 48 }}>
           <span style={{ fontSize: 36, marginRight: 14 }}>🧠</span>
           <div style={{ display: 'flex', fontSize: 34, fontWeight: 'bold', color: 'white' }}>
@@ -49,54 +46,35 @@ export default async function OGImage({ params }: { params: Promise<{ id: string
           </div>
         </div>
 
-        {/* Personality type */}
         <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-          <div style={{ fontSize: 22, color: '#a78bfa', marginBottom: 12, letterSpacing: 6, textTransform: 'uppercase' }}>
+          <div style={{ fontSize: 20, color: '#a78bfa', marginBottom: 12, letterSpacing: 6, textTransform: 'uppercase' }}>
             Personality Type
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 32 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 40 }}>
             <span style={{ fontSize: 72 }}>{typeIcon}</span>
-            <span style={{ fontSize: 58, fontWeight: 'bold', color: 'white', lineHeight: 1.1 }}>{typeName}</span>
+            <span style={{ fontSize: 54, fontWeight: 'bold', color: 'white', lineHeight: 1.1 }}>{typeName}</span>
           </div>
 
-          {/* Trait bars */}
           {traits.length > 0 && (
-            <div style={{ display: 'flex', gap: 20, alignItems: 'flex-end', marginTop: 16 }}>
+            <div style={{ display: 'flex', gap: 24, alignItems: 'flex-end' }}>
               {traits.map((t) => (
                 <div key={t.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
                   <span style={{ color: 'white', fontSize: 22, fontWeight: 'bold' }}>{t.score}%</span>
-                  <div
-                    style={{
-                      width: 140,
-                      height: 16,
-                      background: 'rgba(255,255,255,0.1)',
-                      borderRadius: 8,
-                      overflow: 'hidden',
-                      display: 'flex',
-                    }}
-                  >
-                    <div
-                      style={{
-                        height: '100%',
-                        width: `${t.score}%`,
-                        background: t.color,
-                        borderRadius: 8,
-                      }}
-                    />
+                  <div style={{ width: 130, height: 14, background: 'rgba(255,255,255,0.1)', borderRadius: 8, display: 'flex' }}>
+                    <div style={{ height: '100%', width: `${t.score}%`, background: t.color, borderRadius: 8 }} />
                   </div>
-                  <span style={{ color: '#64748b', fontSize: 18 }}>{t.name}</span>
+                  <span style={{ color: '#64748b', fontSize: 16 }}>{t.name}</span>
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        {/* Footer */}
         <div style={{ color: '#475569', fontSize: 20, marginTop: 32 }}>
           neuralforge-labs.com/MindPrint — Take yours free
         </div>
       </div>
     ),
-    { ...size }
+    { width: 1200, height: 630 }
   )
 }

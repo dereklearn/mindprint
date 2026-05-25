@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'MindPrint',
     images: [{
-      url: '/MindPrint/opengraph-image',
+      url: 'https://neuralforge-labs.com/MindPrint/api/og',
       width: 1200,
       height: 630,
       alt: 'MindPrint — Discover Your Personality',
