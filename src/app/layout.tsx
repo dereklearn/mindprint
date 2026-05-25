@@ -5,12 +5,14 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://neuralforge-labs.com'),
   title: 'MindPrint — Discover Your Personality',
   description: 'Take the MindPrint Big Five personality quiz and discover your unique traits.',
   openGraph: {
     title: 'MindPrint — Discover Your Personality',
     description: 'Discover your Big Five personality traits with real-life scenarios.',
     type: 'website',
+    siteName: 'MindPrint',
   },
 }
 
