@@ -13,7 +13,7 @@ export default function ResultsClient() {
   const [saving, setSaving] = useState(false)
   const [copied, setCopied] = useState(false)
   const [user, setUser] = useState<any>(null)
-  const cardRef = useRef<HTMLDivElement>(null)
+  const cardRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     async function load() {
@@ -101,7 +101,7 @@ export default function ResultsClient() {
   )
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 px-4 py-12">
+    <main ref={cardRef} className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 px-4 py-12">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold text-white mb-6">Your <span className="text-purple-400">MindPrint</span></h1>
@@ -118,7 +118,7 @@ export default function ResultsClient() {
         </div>
 
         {/* Shareable card */}
-        <div ref={cardRef} className="bg-gradient-to-br from-purple-950 to-slate-900 rounded-3xl p-8 border border-purple-800/40 mb-6">
+        <div className="bg-gradient-to-br from-purple-950 to-slate-900 rounded-3xl p-8 border border-purple-800/40 mb-6">
           <div className="flex items-center gap-3 mb-6">
             <span className="text-3xl">🧠</span>
             <div>
