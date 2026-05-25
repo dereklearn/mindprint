@@ -24,6 +24,11 @@ export default function Home() {
           Start your MindPrint →
         </Link>
         <p className="text-slate-500 text-sm mt-6">Free · 3 minutes · No sign-up required</p>
+        <div className="mt-4">
+          <Link href="/admin" className="text-slate-600 hover:text-slate-400 text-xs transition-colors">
+            Admin →
+          </Link>
+        </div>
 
         <div className="mt-16 grid grid-cols-5 gap-3">
           {[

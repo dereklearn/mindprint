@@ -257,7 +257,11 @@ export default function ResultsPage() {
           <p className="text-slate-600 text-xs text-center mt-2">Instagram: card downloads automatically — just upload it to your story</p>
         </div>
 
-        <div className="text-center">
+        <div className="flex items-center justify-center gap-6">
+          <Link href="/" className="text-slate-500 hover:text-slate-300 text-sm transition-colors">
+            🏠 Home
+          </Link>
+          <span className="text-slate-700">·</span>
           <Link href="/quiz" className="text-slate-500 hover:text-slate-300 text-sm transition-colors">
             ↺ Retake the quiz
           </Link>
