@@ -42,13 +42,15 @@ export default function ResultsPage() {
   }, [id])
 
   async function handleSave() {
-    setSaving(true)
-    const { data: { user } } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: `${window.location.origin}/results/${id}` }
-    })
-    setSaving(false)
-  }
+  setSaving(true)
+  await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${window.location.origin}/auth/callback?next=/results/${id}`
+    }
+  })
+  setSaving(false)
+}
 
   async function copyLink() {
     await navigator.clipboard.writeText(window.location.href)
@@ -58,11 +60,24 @@ export default function ResultsPage() {
 
   async function downloadCard() {
     if (!cardRef.current) return
+    const disabledSheets: CSSStyleSheet[] = []
     try {
+      // Disable cross-origin stylesheets before capture to avoid SecurityError
+      Array.from(document.styleSheets).forEach(sheet => {
+        try {
+          sheet.cssRules
+        } catch {
+          sheet.disabled = true
+          disabledSheets.push(sheet)
+        }
+      })
+
       const dataUrl = await toPng(cardRef.current, {
         backgroundColor: '#1e1b4b',
         pixelRatio: 2,
+        skipFonts: true,
       })
+
       const link = document.createElement('a')
       link.download = 'my-mindprint.png'
       link.href = dataUrl
@@ -70,6 +85,8 @@ export default function ResultsPage() {
     } catch (err) {
       console.error('Download failed:', err)
       alert('Could not generate image — try taking a screenshot instead.')
+    } finally {
+      disabledSheets.forEach(sheet => (sheet.disabled = false))
     }
   }
 
