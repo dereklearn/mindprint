@@ -13,6 +13,12 @@ export const metadata: Metadata = {
     description: 'Discover your Big Five personality traits with real-life scenarios.',
     type: 'website',
     siteName: 'MindPrint',
+    images: [{
+      url: '/MindPrint/opengraph-image',
+      width: 1200,
+      height: 630,
+      alt: 'MindPrint — Discover Your Personality',
+    }],
   },
 }
 
