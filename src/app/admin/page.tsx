@@ -92,7 +92,7 @@ export default function AdminPage() {
     setSigningIn(true)
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback?next=/admin` }
+      options: { redirectTo: `${window.location.origin}/MindPrint/auth/callback?next=/MindPrint/admin` }
     })
   }
 

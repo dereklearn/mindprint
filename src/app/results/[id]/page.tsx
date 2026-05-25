@@ -45,7 +45,7 @@ export default function ResultsPage() {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=/results/${id}`
+        redirectTo: `${window.location.origin}/MindPrint/auth/callback?next=/MindPrint/results/${id}`
       }
     })
     setSaving(false)
