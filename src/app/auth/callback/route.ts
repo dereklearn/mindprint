@@ -28,6 +28,24 @@ export async function GET(request: NextRequest) {
     )
 
     await supabase.auth.exchangeCodeForSession(code)
+
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (user) {
+      const meta = user.user_metadata ?? {}
+      const email = user.email ?? null
+      const firstName = meta.given_name ?? meta.full_name?.split(' ')[0] ?? meta.name?.split(' ')[0] ?? null
+      const lastName = meta.family_name ?? meta.full_name?.split(' ').slice(1).join(' ') ?? meta.name?.split(' ').slice(1).join(' ') ?? null
+
+      // If redirecting back to a result, tag it with the user's identity
+      const resultId = next.match(/\/results\/([^/?]+)/)?.[1]
+      if (resultId) {
+        await supabase
+          .from('results')
+          .update({ email, first_name: firstName, last_name: lastName })
+          .eq('id', resultId)
+      }
+    }
   }
 
   return NextResponse.redirect(`${requestUrl.origin}${next}`)

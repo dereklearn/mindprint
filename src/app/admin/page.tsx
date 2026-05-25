@@ -23,6 +23,9 @@ interface RecentResult {
   extraversion: number
   agreeableness: number
   neuroticism: number
+  email: string | null
+  first_name: string | null
+  last_name: string | null
 }
 
 export default function AdminPage() {
@@ -207,6 +210,7 @@ export default function AdminPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="text-slate-400 border-b border-slate-700">
+                    <th className="text-left pb-3 font-medium">User</th>
                     <th className="text-left pb-3 font-medium">Date</th>
                     <th className="text-center pb-3 font-medium">O</th>
                     <th className="text-center pb-3 font-medium">C</th>
@@ -219,7 +223,19 @@ export default function AdminPage() {
                 <tbody>
                   {recent.map((r) => (
                     <tr key={r.id} className="border-b border-slate-700/50 hover:bg-slate-700/20 transition-colors">
-                      <td className="py-3 text-slate-300">
+                      <td className="py-3 pr-4">
+                        {r.email ? (
+                          <div>
+                            <div className="text-white text-sm font-medium">
+                              {[r.first_name, r.last_name].filter(Boolean).join(' ') || '—'}
+                            </div>
+                            <div className="text-slate-400 text-xs">{r.email}</div>
+                          </div>
+                        ) : (
+                          <span className="text-slate-600 text-sm italic">Anonymous</span>
+                        )}
+                      </td>
+                      <td className="py-3 text-slate-300 whitespace-nowrap">
                         {new Date(r.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                       </td>
                       <td className="py-3 text-center text-violet-400 font-medium">{r.openness}%</td>
